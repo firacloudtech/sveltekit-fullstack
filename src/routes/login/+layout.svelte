@@ -1,16 +1,27 @@
 <script>
-	/** @type {import('./$types').LayoutData} */
-	export let data;
+	import { page } from '$app/stores';
+	import AnimatedRoute from '$lib/components/AnimatedRoute.svelte';
 </script>
 
-<nav>
-	<ul>
-		<li>Hello</li>
+<nav class="flex justify-center my-6">
+	<ul class="steps">
+		<a href="/login" class="step step-primary">Sign In</a>
+		<a
+			href="/login/username"
+			class="step"
+			class:step-primary={$page.route.id?.match(/username|photo/g)}
+			>Choose Username
+		</a>
+		<a href="/login/photo" class="step" class:step-primary={$page.route.id?.includes('photo')}
+			>Upload Photo</a
+		>
 	</ul>
 </nav>
 
-<main class="card w-4/6 mx-auto bg-neutral text-neutral-content">
-	<div class="card-body items-center text-center">
-		<slot />
-	</div>
-</main>
+<AnimatedRoute>
+	<main class="card w-4/6 bg-neutral text-neutral-content mx-auto">
+		<div class="card-body items-center text-center">
+			<slot />
+		</div>
+	</main>
+</AnimatedRoute>
